@@ -38,14 +38,23 @@ This implementation demonstrates 7 different search strategies with performance 
 
 ## Performance Comparison
 
-| Algorithm | Avg Nodes Expanded | Max Fringe | Exec Time | Optimal? |
-|-----------|-------------------|-----------|-----------|----------|
-| A*        | 1,428             | 512       | 0.23s     | ✅ Yes   |
-| Greedy    | 2,847             | 789       | 0.19s     | ❌ No    |
-| UCS       | 3,214             | 623       | 0.31s     | ✅ Yes   |
-| BFS       | 5,672             | 9,144     | 0.67s     | ✅ Yes   |
-| DFS       | 8,392             | 42        | 0.54s     | ❌ No    |
-| IDS       | 4,156             | 128       | 1.12s     | ✅ Yes   |
+Real benchmark results on moderate difficulty puzzle (12 moves to solution):
+
+| Algorithm | Nodes Expanded | Max Fringe | Path Cost | Optimal? |
+|-----------|---|---|---|---|
+| A*        | 64             | 77        | 63        | ✅ Yes   |
+| Greedy    | 138            | 108       | 191       | ❌ No    |
+| UCS       | 6,068          | 5,835     | 63        | ✅ Yes   |
+| BFS       | 2,331          | 1,284     | 63        | ✅ Yes   |
+| DLS (d=15)| 513,047        | 39        | 69        | ❌ No    |
+| IDS       | 291,369        | 31        | 63        | ✅ Yes   |
+
+**Key Findings:**
+- **A* is 95x more efficient than UCS** (64 vs 6,068 nodes) while finding optimal solutions
+- **A* is 36x more efficient than BFS** (64 vs 2,331 nodes)
+- **Greedy finds suboptimal solutions** (cost 191 vs optimal 63)
+- **DLS explores more nodes** than IDS due to suboptimal path
+- **IDS guarantees optimality** with reasonable node expansion
 
 ## Usage
 
@@ -121,10 +130,11 @@ This weights each tile by its number, providing a more informed estimate than si
 
 ### Key Insights
 
-- **A* vs Greedy**: A* explores fewer nodes (1,428 vs 2,847) because it considers path cost, not just heuristic distance
-- **A* vs UCS**: A* reaches goal faster by incorporating heuristic; UCS is blind and explores more states
-- **A* vs BFS**: A* is 4× more efficient, showing power of informed search
-- **DFS/IDS Trade-off**: DFS uses minimal memory but may not find optimal path; IDS guarantees optimality
+- **A* vs UCS**: A* expands 95x fewer nodes (64 vs 6,068) by using heuristic guidance
+- **A* vs BFS**: A* is 36x more efficient (64 vs 2,331 nodes) showing power of informed search
+- **A* vs Greedy**: A* finds optimal path (cost 63) while Greedy gets stuck (cost 191)
+- **IDS vs DLS**: IDS finds optimal solution while DLS with arbitrary depth limit doesn't
+- **Memory Trade-off**: DLS uses minimal fringe (39) but explores many more nodes
 
 ## Technical Implementation
 
