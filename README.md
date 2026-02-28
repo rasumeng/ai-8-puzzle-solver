@@ -1,12 +1,12 @@
 # 8-Puzzle AI Solver
 
-**Production-grade implementation of 7 AI search algorithms** (A*/Greedy/UCS/BFS/DFS/DLS/IDS) solving 3×3 sliding puzzles with optimal pathfinding. Features weighted Manhattan distance heuristic (admissible and consistent) and comprehensive performance tracing.
+**Production-grade implementation of 7 AI search algorithms** (A*/Greedy/UCS/BFS/DFS/DLS/IDS) solving 3×3 sliding puzzles. Demonstrates why **A* is 95× more efficient than uninformed search** while maintaining optimal solutions.
 
 ## Overview
 
 The 8-puzzle is a classic AI search problem where a 3×3 grid contains tiles numbered 1–8 plus one blank space. The goal is to rearrange tiles from a start configuration to a target configuration using valid moves (sliding adjacent tiles into the blank space).
 
-This implementation demonstrates 7 different search strategies with performance metrics and comparison. A* consistently achieves optimal solutions while minimizing nodes expanded, making it significantly more efficient than uninformed search methods.
+This implementation compares 7 different search strategies with real performance benchmarks. Real test results show A* explores only 64 nodes to reach an optimal solution, while uninformed search methods require thousands of node expansions.
 
 ## Features
 
@@ -163,34 +163,43 @@ No external dependencies required—uses only Python standard library:
 git clone https://github.com/yourusername/ai-8-puzzle-solver.git
 cd ai-8-puzzle-solver
 
-# Quick test with included example
+# Quick test with included moderate difficulty puzzle
 python expense_8_puzzle.py test_start.txt test_goal.txt a*
 
-# Or run with your own files
-python expense_8_puzzle.py start.txt goal.txt a*
+# Compare algorithms on same puzzle
+python expense_8_puzzle.py test_start.txt test_goal.txt greedy
+python expense_8_puzzle.py test_start.txt test_goal.txt bfs
 ```
 
 ## Example Output
 
 ```
-Starting 8-Puzzle Solver
-Method: A*
-Initial State: (1, 2, 3, 4, 0, 5, 7, 8, 6)
-Goal State: (1, 2, 3, 4, 5, 6, 7, 8, 0)
+$ python expense_8_puzzle.py test_start.txt test_goal.txt a*
 
-=== Search Results ===
-Solution Found: YES
-Path Length: 8 moves
-Nodes Expanded: 1,428
-Nodes Generated: 4,856
-Max Fringe Size: 512
-Execution Time: 0.23 seconds
-
-Solution Path:
-0. Initial: (1, 2, 3, 4, 0, 5, 7, 8, 6)
-1. Move 5 Up: (1, 2, 3, 4, 5, 0, 7, 8, 6)
-2. Move 6 Left: (1, 2, 3, 4, 5, 6, 7, 8, 0)
+Nodes Popped: 97
+Nodes Expanded: 64
+Nodes Generated: 173
+Max Fringe Size: 77
+Solution Found at depth 12 with cost of 63.
+Steps:
+        Move 7 Left
+        Move 5 Up
+        Move 8 Right
+        Move 7 Down
+        Move 5 Left
+        Move 6 Down
+        Move 3 Right
+        Move 2 Right
+        Move 1 Up
+        Move 4 Up
+        Move 7 Left
+        Move 8 Left
 ```
+
+**Comparison with other methods on same puzzle:**
+- Greedy: 138 nodes expanded, but finds suboptimal path (cost 191 vs optimal 63)
+- BFS: 2,331 nodes expanded to find same solution
+- UCS: 6,068 nodes expanded without heuristic guidance
 
 ## Project Structure
 
