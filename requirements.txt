@@ -1,0 +1,15 @@
+# 8-Puzzle AI Solver - Python Dependencies
+# This project uses only Python standard library modules
+# No external packages required!
+
+# Standard library modules used:
+# - collections.deque (queue operations)
+# - heapq (priority queue for A*, Greedy, UCS)
+# - itertools (counter for heap tie-breaking)
+# - datetime (timestamp generation for trace files)
+# - sys (command-line arguments)
+
+# Optional development dependencies:
+# pytest>=7.0  # for unit testing
+# black>=22.0  # for code formatting
+# pylint>=2.0  # for static analysis
